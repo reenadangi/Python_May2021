@@ -1,3 +1,21 @@
+# Housekeeping 
+* Week6 - Exam week
+* 05/31 week - No Lectures 
+
+# What all we have learned? 
+* Functions
+* Python OOP
+* Setting up Django project
+* Models(one-many and Many to many realtionships)
+* Djnago ORM 
+* Sessions
+
+# What is important before exam 
+* CRUD 
+* validations
+* bcrypt 
+* Login and registration 
+
 # RESTful Development & Fullstack Django
 The client/server relationship is a prerequisite of a set of principles known as REST(representational state transfer) which provides a way of mapping HTTP verbs ( get, post, put/update, delete) and CRUD actions (create, read, update, delete) together.
 
@@ -11,8 +29,4 @@ The client/server relationship is a prerequisite of a set of principles known as
 | Update   | /shows/:id/update      |      PUT        | Updates a particular show       |
 | Destroy  | /shows/:id/destroy      |      DELETE     | Deletes a particular show       |
 
-* CRUD 
-* validations
-* bcrypt 
-* Login and registration 
 

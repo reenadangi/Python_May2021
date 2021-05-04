@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/">Home</a>
+    <h1>Directors</h1>
+    <form action="movies/create" method="POST">
+        {% csrf_token %} 
+        Title: <input type="text" name="title">
+        description: <input type="text" name="description">
+        <select name="director" id="">
+            {% for director in directors %}
+            <option value="{{director.id}}">{{director.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Add Movie">
+    </form>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Director</th>
+            <th>Action</th>
+          
+        </tr>
+        {% for movie in movies %}
+        <tr>
+            <td>{{ movie.title }}</td>
+            <td>{{ movie.description }}</td>
+            <td>{{ movie.director.name}}</td>
+            <td><a href="movies/{{movie.id}}/edit">edit</a>  </td>
+            <td><a href="movies/{{movie.id}}/destroy">delete</a> </td>
+           
+        <td>
+           
+        </td>
+        </tr>
+        {% endfor %}
+        </table>
+
+</body>
+</html>

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
     <!-- CSS only -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
@@ -12,7 +13,6 @@
       integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
     <title>Document</title>
   </head>
   <body>
@@ -20,27 +20,30 @@
       <nav class="navbar navbar-dark bg-dark p-2">
         <a class="navbar-brand" href="/">Home</a>
       </nav>
-      <h1>Directors</h1>
-      <form action="directors/create" method="POST">
-        {% csrf_token %} 
-        <div class="form-group">
-        <label for="">Name</label> 
-        <input type="text" name="name" class="form-control"/>
-      </div>
-        <input type="submit" class="btn btn-success mt-2" value="Add Director" />
+      <h1>Actors</h1>
+      <h3>Create New actor</h3>
+      <form action="actors/create" method="POST">
+        {% csrf_token %} Name: <input type="text" name="name" />
+        <input type="submit" value="Add actor" />
       </form>
-      <table class="table table-striped mt-2">
+      <hr />
+      <table>
         <tr>
-          <th>Director</th>
-          <th>Movies</th>
+          <th>Actor</th>
+          <th>ActedIn</th>
+          <th>Total Movies</th>
+          
         </tr>
-        {% for director in directors %}
+        {% for actor in actors %}
         <tr>
-          <td>{{ director.name }}</td>
+          <td>{{ actor.name }}</td>
           <td>
-            {% for movie in director.movies.all %} 
-            {{movie.title}} | 
-            {% endfor %}
+            {% for movie in actor.movies.all %}
+            <a href="">{{movie.title}}</a> | 
+            {%endfor%}
+          </td>
+          <td>
+            {{ actor.movies.count }}
           </td>
         </tr>
         {% endfor %}

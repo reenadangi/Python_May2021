@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<meta charset="UTF-8">
+	<title>Destination</title>
+   
+</head>
+<body>
+	<a  href="/">Dashboard</a> | <a href="/logout" id="logout"> Log out</a>
+
+<div>
+    <h1>{{trip.destination}}</h1>
+    <ul>
+        <li>Description: {{ trip.desc }}</li>
+        <li>Travel Date From: {{ trip.date_start }}</li>
+        <li>Travel Date To: {{ trip.date_end }}</li> 
+        <li>Last Updated: {{trip.updated_at}}</li>
+        <li>Created on: {{ trip.created_at }}</li>
+    </ul>
+
+    <h2>Other users joining the trip:</h2>
+    {% if trip.joined %}
+            <ul>
+                {% for tripid in trip.joined.all %}
+                    <li>{{ tripid.first_name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+</body>
+
+</html>

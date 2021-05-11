@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit</title>
+</head>
+<style>
+    .messages{
+            color: red;
+    }    
+
+    table {
+        align-items: center;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        height: 40px;
+        width: 70px;
+
+    }
+    hr{
+        width: 800px;
+        height: 5px;
+        background-color: #4CAF50;
+    }
+    input {
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-position: 10px 10px; 
+        padding: 12px 20px 12px 40px;
+}
+
+</style>
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div >
+        <h1 > Hello {{user.first_name}} {{user.last_name}}! Let's edit your Trip!</h1>
+        <a href="/destroy" id="logout"> Log out</a>
+    </div>
+
+    <form action="/trip/{{trip.id}}/update" method="POST">
+        {%csrf_token%}
+        <div id="form">
+            <p>Destination: <input type="text" name="destination" value="{{trip.destination}}"></p>
+            <p>Description: <input type="text" name="desc" value="{{trip.desc}}"></p>
+            <p>Start Date: <input type="date" name="date_start" value="{{trip.date_start}}"></p>
+            <p>End Date: <input type="date" name="date_end" value="{{trip.date_end}}"></p>
+            <button type="submit" >Add</button> <br> <br>
+        </div>
+    </form>
+    <a href="/trip"> <button >Cancel</button></a>
+  
+</body>
+
+</html>

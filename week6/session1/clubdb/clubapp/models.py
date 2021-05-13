@@ -8,6 +8,10 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 class UserManager(models.Manager):
     def validate(self, postData):
         errors = {}
+        FIRST_NAME_REGEX = re.compile(r'^[a-zA-Z ]+$')
+        if not  FIRST_NAME_REGEX.match(postData['first_name']):    # test whether a field matches the pattern            
+            errors['first_name_format'] = ("Invalid name")
+        
         if len(postData['first_name']) < 2:
             errors['first_name'] = 'First Name must be at least 2 characters'
 

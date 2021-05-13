@@ -36,19 +36,6 @@ def logout(request):
     request.session.clear()
     return redirect('/')
 
-def clubs(request):
-    if 'user_id' not in request.session:
-        return redirect("/")
-    user = User.objects.get(id = request.session['user_id'])
-    context = {
-        "clubs": Club.objects.all()
-		# "user": "user",
-		# "user_clubs": "user's clubs",
-        # "member_clubs" : "User is member of",
-		# "other_clubs": "User is not member of",
-	}
-    return render(request,"clubs.html",context)
-
 def new(request):
     if 'user_id' not in request.session:
         return redirect("/")
@@ -63,6 +50,7 @@ def create(request):
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value)
+            print(errors)
             return redirect("/clubs/new")
         Club.objects.create(
             name =request.POST['name'],
@@ -73,31 +61,72 @@ def create(request):
         )
     return redirect("/clubs")
 
+def clubs(request):
+    if 'user_id' not in request.session:
+        return redirect("/")
+    user = User.objects.get(id = request.session['user_id'])
+    print(user)
+    context = {
+        # "clubs": Club.objects.all(),
+		"user": user,
+		"user_clubs":Club.objects.filter(owner = user),
+        "member_clubs" : Club.objects.filter(joined=user),
+		"other_clubs": Club.objects.all().exclude(owner=user).exclude(joined=user),
+	}
+    return render(request,"clubs.html",context)
+
 def join(request,c_id):
-    user = User.objects.get(id=request.session['user_id'])
-    club = Club.objects.get(id=c_id)
+    # Get user id from session
+    user = User.objects.get(id = request.session['user_id'])
+    # Get club from c_id
+    club=Club.objects.get(id=c_id)
+    # Add club to user
     user.joined_clubs.add(club)
     return redirect("/clubs")
 
 def cancel(request,c_id):
-    user = User.objects.get(id=request.session['user_id'])
-    club = Club.objects.get(id=c_id)
+    # Get user id from session
+    user = User.objects.get(id = request.session['user_id'])
+
+    # Get club from c_id
+    club=Club.objects.get(id=c_id)
+
+    # Remove club from user
     user.joined_clubs.remove(club)
+
     return redirect("/clubs")
 
 def delete(request,id):
     club=Club.objects.get(id=id)
-    club.delete() 
+    club.delete()
     return redirect("/clubs")
     
 def edit(request,id):
-    pass
-   
+    context={
+        'club':Club.objects.get(id=id)
+    }
+    return render(request,"edit.html",context)
 
 def update(request,id):
-    pass
+    if request.method == "POST":
+        errors = Club.objects.basic_validator(request.POST)
+        if len(errors) > 0:
+            for key, value in errors.items():
+                messages.error(request, value)
+            return redirect(f"/clubs/edit/{id}")
+        else:
+            club=Club.objects.get(id=id)
+            club.name=request.POST['name']
+            club.desc=request.POST['desc']
+            club.save()
+    return redirect('/clubs')
     
-def show(request, t_id):
-    pass
+def show(request, id):
+    context={
+        'club':Club.objects.get(id=id)
+    }
+    return render(request,"display.html",context)
+
+    
     
 

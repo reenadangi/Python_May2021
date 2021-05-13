@@ -1,31 +1,17 @@
-<!DOCTYPE html>
-<html>
-    <head>
-	<meta charset="UTF-8">
-	<title>Destination</title>
-   
-</head>
-<body>
-	<a  href="/">Dashboard</a> | <a href="/logout" id="logout"> Log out</a>
-
-<div>
-    <h1>{{trip.destination}}</h1>
+{% extends "base.html" %}
+{% block content %}
+    <h1>{{club.name}}</h1>
     <ul>
-        <li>Description: {{ trip.desc }}</li>
-        <li>Travel Date From: {{ trip.date_start }}</li>
-        <li>Travel Date To: {{ trip.date_end }}</li> 
-        <li>Last Updated: {{trip.updated_at}}</li>
-        <li>Created on: {{ trip.created_at }}</li>
+        <li>Description: {{ club.desc }}</li>
+        <li>Club start date: {{ club.date_start }}</li>
+        <li>Club end date: {{ club.date_end }}</li> 
+        <li>Last Updated: {{club.updated_at}}</li>
+        <li>Created on: {{ club.created_at }}</li>
     </ul>
-
-    <h2>Other users joining the trip:</h2>
-    {% if trip.joined %}
+    <h2>Other users joining the club:</h2>
             <ul>
-                {% for tripid in trip.joined.all %}
-                    <li>{{ tripid.first_name }}</li>
+                {% for member in club.joined.all %}
+                    <li>{{ member.first_name }}</li>
                 {% endfor %}
             </ul>
-        {% endif %}
-</body>
-
-</html>
+{% endblock content %}

@@ -1,6 +1,6 @@
 from django.db import models
 from django.db import models
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,date
 import bcrypt
 import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
@@ -74,6 +74,19 @@ class ClubManager(models.Manager):
             errors["name"] = "Name must have at least 3 characters."        
         if len(postData['desc']) == 0:
             errors["desc"] = "Description is empty"
+
+        start= datetime.strptime(postData['date_start'], "%Y-%m-%d")
+        end= datetime.strptime(postData['date_end'], "%Y-%m-%d")
+        x=postData['date_start'].split("-")
+        y=postData['date_end'].split("-")
+        start=date(int(x[0]),int(x[1]),int(x[2]))
+        end=date(int(y[0]),int(y[1]),int(y[2]))
+        print((end-start).days/365)
+        # end= datetime.strptime(club.date_end, "%Y-%m-%d")
+        # start= club.date_start
+        # end=club.date_end
+        # print(date(club.date_end).days)
+        
         return errors
 
 class Club(models.Model):

@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from .models import User,Club
+from datetime import datetime, timedelta,date
 
 # Create your views here.
 def index(request):
@@ -122,6 +123,7 @@ def update(request,id):
     return redirect('/clubs')
     
 def show(request, id):
+    club=Club.objects.get(id=id)
     context={
         'club':Club.objects.get(id=id)
     }

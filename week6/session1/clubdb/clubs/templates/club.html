@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %} 
+<div>
+    <h1>{{club.owner.first_name}} 's club</h1>
+    <h1>{{club.name}}</h1>
+    <ul>
+        <li>Name: {{ club.desc }}</li>
+        <li>Start Date From: {{ club.date_start }}</li>
+        <li>End Date To: {{ club.date_end }}</li> 
+        <li>Last Updated: {{club.updated_at}}</li>
+        <li>Created on: {{ club.created_at }}</li>
+    </ul>
+
+    <h2>Other users joining the club:</h2>
+    {% if club.joined %}
+            <ul>
+                {% for club in club.joined.all %}
+                    <li>{{ club.first_name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+{% endblock %}

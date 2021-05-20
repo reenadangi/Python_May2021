@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+{% block content %} 
+    {% if messages %}
+    <ul class="messages">    
+        {% for message in messages %}    
+            <li {% if message.tags %} class="text-danger"{% endif %}>{{ message }}</li>    
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="d-flex justify-content-around p-3 bg-secondary text-white"> 
+        <div>
+            <h1>Registration</h1>
+            <form action="/register" method="POST">
+                {% csrf_token %}
+                <p>First name:<input type="text" class="form-control" name="first_name"></p>
+                <p>Last name:<input type="text" class="form-control" name="last_name"></p>
+                <p>E-mail:<input type="email"  class="form-control" name="email"></p>
+                <p>password:<input type="password"  class="form-control" name="password"></p>
+                <p>Confirm password:<input type="password" class="form-control" name="confirm_password"></p>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+
+        <div>
+            <h1>Login</h1>
+            <form action="/login" method="POST">
+                {% csrf_token %}
+                <p>Email:<input type="email" name="email" class="form-control"></p>
+                <p>password:<input type="password" name="password" class="form-control"></p>
+                <button type="submit">Log in</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
